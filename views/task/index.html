@@ -67,9 +67,9 @@
                     dataType: "json",
                     success: function(response){
                         console.log(response)
-                        // $('tbody').html(response.data)
-                        // alert(response.message)
-                        // $('#modalTask').modal('hide')
+                        $('tbody').html(response.data)
+                        alert(response.message)
+                        $('#modalTask').modal('hide')
                     },
                     error: function(response){
                         console.log(response)
