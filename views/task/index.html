@@ -24,6 +24,7 @@
                 <th>#</th>
                 <th>Assignee</th>
                 <th>Deadline</th>
+                <th>Status</th>
                 <th>Action</th>
             </thead>
             <tbody>
@@ -57,6 +58,15 @@
                 });
             });
 
+            // edit data task
+            $(document).on('click', '.edit-task', function(){
+                var id = $(this).attr('data-id');
+                $.get(site_url + "task/get_form?id=" + id, function(html){
+                    $('#modalTask').html(html).modal('show')
+                });     
+            });
+
+
             // simpan data 
             $(document).on('submit', '#form-task', function(e){
                 e.preventDefault();
@@ -75,6 +85,30 @@
                         console.log(response)
                     }
                 })
+            });
+
+            // delete data task
+            $(document).on('click', '.delete-task', function(){
+                var id = $(this).attr('data-id');
+                var confirmDelete = confirm("Are you sure you want to delete ?");
+                if (confirmDelete == true) {
+                    $.post(site_url + "task/delete", {id: id}, function(response){
+                        alert(response.message)
+                        $('tbody').html(response.data);
+                    }, 'JSON');
+                }
+            });
+
+             // Complete data task
+            $(document).on('click', '.complete-task', function(){
+                var id = $(this).attr('data-id');
+                var confirmDelete = confirm("Are you sure change status to Complete ?");
+                if (confirmDelete == true) {
+                    $.post(site_url + "task/complete", {id: id}, function(response){
+                        alert(response.message)
+                        $('tbody').html(response.data);
+                    }, 'JSON');
+                }
             });
                 
         </script>
