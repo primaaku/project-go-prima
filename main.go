@@ -3,7 +3,7 @@ package main
 import (
 	"net/http"
 
-	"github.com/primaaku/go-project-prima/controllers/taskcontroller"
+	"github.com/primaaku/project-go-prima/controllers/taskcontroller"
 )
 
 func main() {
