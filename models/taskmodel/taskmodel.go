@@ -38,3 +38,16 @@ func (m *TaskModel) FindAll(task *[]entites.Task) error {
 
 	return nil
 }
+
+func (m *TaskModel) Create(task *entites.Task) error {
+	result, err := m.db.Exec("insert into task (assignee, deadline) values(?,?)",
+		task.Assignee, task.Deadline)
+
+	if err != nil {
+		return err
+	}
+
+	lastInsertId, _ := result.LastInsertId()
+	task.Id_task = lastInsertId
+	return nil
+}

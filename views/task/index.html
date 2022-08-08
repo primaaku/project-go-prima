@@ -10,14 +10,21 @@
 </head>
 
 <body>
+
+    <div class="modal fade" id="modalTask" tabindex="-1" role="dialog" aria-labelledby="modalTaskLabel" aria-hidden="true">
+        
+    </div>
+
     <div class="container mt-5">
+
+        <button type="button" class="btn btn-primary add-task">Add Data</button>
 
         <table class="table mt-3">
             <thead>
                 <th>#</th>
                 <th>Assignee</th>
                 <th>Deadline</th>
-                <th>Aksi</th>
+                <th>Action</th>
             </thead>
             <tbody>
                 {{ .data }}
@@ -25,7 +32,7 @@
         </table>
     </div>
 
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
         crossorigin="anonymous"></script>
@@ -35,6 +42,43 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"
         integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK"
         crossorigin="anonymous"></script>
+
+
+        <script>
+
+            var site_url = "http://localhost:8000/";
+            
+            // show modal 
+            $(document).ready(function(){
+                $('.add-task').click(function(){
+                    $.get(site_url + "task/get_form", function(html){
+                        $('#modalTask').html(html).modal('show')
+                    });     
+                });
+            });
+
+            // simpan data 
+            $(document).on('submit', '#form-task', function(e){
+                e.preventDefault();
+                $.ajax({
+                    type: $(this).attr('method'),
+                    url: $(this).attr('action'),
+                    data: $(this).serialize(),
+                    dataType: "json",
+                    success: function(response){
+                        console.log(response)
+                        // $('tbody').html(response.data)
+                        // alert(response.message)
+                        // $('#modalTask').modal('hide')
+                    },
+                    error: function(response){
+                        console.log(response)
+                    }
+                })
+            });
+                
+        </script>
+
 </body>
 
 </html>

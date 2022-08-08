@@ -6,8 +6,9 @@
         <td>{{ .Assignee }}</td>
         <td>{{ .Deadline }}</td>
         <td>
-            <button data-id="{{ .Id_task }}" class="btn btn-danger btn-sm delete-task">Complete Task</button>
+            <button data-id="{{ .Id_task }}" class="btn btn-secondary btn-sm complete-task">Complete Task</button>
             <button data-id="{{ .Id_task }}" class="btn btn-warning btn-sm edit-task">Edit</button>
+            <button data-id="{{ .Id_task }}" class="btn btn-danger btn-sm delete-task">Delete</button>
         </td>
     </tr>
 {{ end }}
