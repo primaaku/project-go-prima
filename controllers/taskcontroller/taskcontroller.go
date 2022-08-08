@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
+	"strconv"
 
 	"github.com/primaaku/project-go-prima/entites"
 	"github.com/primaaku/project-go-prima/models/taskmodel"
@@ -54,8 +55,30 @@ func GetData() string {
 
 func GetForm(w http.ResponseWriter, r *http.Request) {
 
+	queryString := r.URL.Query()
+	id, err := strconv.ParseInt(queryString.Get("id"), 10, 64)
+
+	var data map[string]interface{}
+
+	if err != nil {
+		data = map[string]interface{}{
+			"title": "Input Data Task",
+		}
+	} else {
+		var task entites.Task
+		err := taskModel.Find(id, &task)
+		if err != nil {
+			panic(err)
+		}
+
+		data = map[string]interface{}{
+			"title": "Edit Data Task",
+			"task":  task,
+		}
+	}
+
 	temp, _ := template.ParseFiles("views/task/form.html")
-	temp.Execute(w, nil)
+	temp.Execute(w, data)
 }
 
 func Store(w http.ResponseWriter, r *http.Request) {
@@ -67,18 +90,36 @@ func Store(w http.ResponseWriter, r *http.Request) {
 		task.Assignee = r.Form.Get("assignee")
 		task.Deadline = r.Form.Get("deadline")
 
-		// id, err := strconv.ParseInt(r.Form.Get("id"), 10, 64)
-		err := taskModel.Create(&task)
+		id, err := strconv.ParseInt(r.Form.Get("id"), 10, 64)
 
+		var data map[string]interface{}
 		if err != nil {
 			// insert data
+			err := taskModel.Create(&task)
+			if err != nil {
+				ResponseError(w, http.StatusInternalServerError, err.Error())
+				return
+			}
 
-			ResponseError(w, http.StatusInternalServerError, err.Error())
-			return
-		}
-		data := map[string]interface{}{
-			"message": "Data berhasil disimpan",
-			"data":    template.HTML(GetData()),
+			data = map[string]interface{}{
+				"message": "Data berhasil disimpan",
+				"data":    template.HTML(GetData()),
+			}
+
+		} else {
+			// update data
+			task.Id_task = id
+			err := taskModel.Update(task)
+			if err != nil {
+				ResponseError(w, http.StatusInternalServerError, err.Error())
+				return
+			}
+
+			data = map[string]interface{}{
+				"message": "Data berhasil diubah",
+				"data":    template.HTML(GetData()),
+			}
+
 		}
 
 		ResponseJson(w, http.StatusOK, data)
@@ -86,6 +127,50 @@ func Store(w http.ResponseWriter, r *http.Request) {
 
 }
 
+// fungsi hapus data task
+func Delete(w http.ResponseWriter, r *http.Request) {
+
+	r.ParseForm()
+
+	id, err := strconv.ParseInt(r.Form.Get("id"), 10, 64)
+	if err != nil {
+		panic(err)
+	}
+	err = taskModel.Delete(id)
+	if err != nil {
+		panic(err)
+	}
+
+	data := map[string]interface{}{
+		"message": "Data berhasil dihapus",
+		"data":    template.HTML(GetData()),
+	}
+	ResponseJson(w, http.StatusOK, data)
+}
+
+// complete task
+
+func Complete(w http.ResponseWriter, r *http.Request) {
+
+	r.ParseForm()
+
+	id, err := strconv.ParseInt(r.Form.Get("id"), 10, 64)
+	if err != nil {
+		panic(err)
+	}
+	err = taskModel.Complete(id)
+	if err != nil {
+		panic(err)
+	}
+
+	data := map[string]interface{}{
+		"message": "Status Data Complete",
+		"data":    template.HTML(GetData()),
+	}
+	ResponseJson(w, http.StatusOK, data)
+}
+
+// fungsi respon error
 func ResponseError(w http.ResponseWriter, code int, message string) {
 	ResponseJson(w, code, map[string]string{"error": message})
 }
