@@ -7,9 +7,10 @@ import (
 	"net/http"
 
 	"github.com/primaaku/project-go-prima/entites"
+	"github.com/primaaku/project-go-prima/models/taskmodel"
 )
 
-var taskModel = taskModel.New()
+var taskModel = taskmodel.New()
 
 func Index(w http.ResponseWriter, r *http.Request) {
 	// fmt.Println("Berjalan")
@@ -18,7 +19,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 	}
 
 	temp, _ := template.ParseFiles("views/task/index.html")
-	temp.Execute(w, nil)
+	temp.Execute(w, data)
 }
 
 func GetData() string {
