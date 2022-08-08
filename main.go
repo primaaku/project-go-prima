@@ -10,4 +10,6 @@ func main() {
 
 	http.HandleFunc("/", taskcontroller.Index)
 
+	http.ListenAndServe(":8000", nil)
+
 }
