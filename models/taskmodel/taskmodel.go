@@ -32,7 +32,8 @@ func (m *TaskModel) FindAll(task *[]entites.Task) error {
 		rows.Scan(
 			&data.Id_task,
 			&data.Assignee,
-			&data.Deadline)
+			&data.Deadline,
+			&data.Status)
 		*task = append(*task, data)
 	}
 
@@ -49,5 +50,41 @@ func (m *TaskModel) Create(task *entites.Task) error {
 
 	lastInsertId, _ := result.LastInsertId()
 	task.Id_task = lastInsertId
+	return nil
+}
+
+func (m *TaskModel) Find(id int64, task *entites.Task) error {
+	return m.db.QueryRow("select * from task where id_task = ?", id).Scan(
+		&task.Id_task,
+		&task.Assignee,
+		&task.Deadline,
+		&task.Status)
+}
+
+func (m *TaskModel) Update(task entites.Task) error {
+
+	_, err := m.db.Exec("update task set assignee = ?, deadline = ? where id_task = ?",
+		task.Assignee, task.Deadline, task.Id_task)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *TaskModel) Complete(id int64) error {
+	_, err := m.db.Exec("update task set status = 1 where id_task = ?", id)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (m *TaskModel) Delete(id int64) error {
+	_, err := m.db.Exec("delete from task where id_task = ?", id)
+	if err != nil {
+		return err
+	}
 	return nil
 }
