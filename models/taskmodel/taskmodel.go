@@ -74,7 +74,7 @@ func (m *TaskModel) Update(task entites.Task) error {
 }
 
 func (m *TaskModel) Complete(id int64) error {
-	_, err := m.db.Exec("update task set status = 1 where id_task = ?", id)
+	_, err := m.db.Exec("update task set status = 'Complete' where id_task = ?", id)
 	if err != nil {
 		return err
 	}
