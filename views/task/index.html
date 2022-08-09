@@ -1,36 +1,238 @@
 <!doctype html>
 <html lang="en">
 
+<style>
+    /* header css */
+
+    * {box-sizing: border-box;}
+
+body { 
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.header {
+  overflow: hidden;
+  background-color: #f1f1f1;
+  padding: 20px 10px;
+}
+
+.header a {
+  float: left;
+  color: black;
+  text-align: center;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 18px; 
+  line-height: 25px;
+  border-radius: 4px;
+}
+
+.header a.logo {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.header a:hover {
+  background-color: #ddd;
+  color: black;
+  margin-left:10px;
+}
+
+.header a.active {
+  background-color: dodgerblue;
+  color: white;
+}
+
+.header-right {
+  float: right;
+}
+
+@media screen and (max-width: 500px) {
+  .header a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+  
+  .header-right {
+    float: none;
+  }
+}
+
+    /* style footer */
+    .footer-basic {
+        padding: 40px 0;
+        background-color: #ffffff;
+        color: #4b4c4d;
+    }
+
+    .footer-basic ul {
+        padding: 0;
+        list-style: none;
+        text-align: center;
+        font-size: 18px;
+        line-height: 1.6;
+        margin-bottom: 0;
+    }
+
+    .footer-basic li {
+        padding: 0 10px;
+    }
+
+    .footer-basic ul a {
+        color: inherit;
+        text-decoration: none;
+        opacity: 0.8;
+    }
+
+    .footer-basic ul a:hover {
+        opacity: 1;
+    }
+
+    .footer-basic .social {
+        text-align: center;
+        padding-bottom: 25px;
+    }
+
+      
+    .footer-basic .social>a i.fa-facebook {
+        font-size: 18px;
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        display: inline-block;
+        text-align: center;
+        border-radius: 50%;
+        border: 1px solid #ccc;
+        margin: 0 8px;
+        color: #fff;
+        opacity: 0.75;
+        background-color: #3B5998;
+    }
+
+    .footer-basic .social>a i.fa-instagram {
+        font-size: 18px;
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        display: inline-block;
+        text-align: center;
+        border-radius: 50%;
+        border: 1px solid #ccc;
+        margin: 0 8px;
+        color: #fff;
+        opacity: 0.75;
+        background-color: #B7242A;
+    }
+    
+    .footer-basic .social>a i.fa-twitter {
+        font-size: 18px;
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        display: inline-block;
+        text-align: center;
+        border-radius: 50%;
+        border: 1px solid #ccc;
+        margin: 0 8px;
+        color: #fff;
+        opacity: 0.75;
+        background-color: #55ACEE;
+    }
+
+    .footer-basic .social>a i.fa-linkedin {
+        font-size: 18px;
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        display: inline-block;
+        text-align: center;
+        border-radius: 50%;
+        border: 1px solid #ccc;
+        margin: 0 8px;
+        color: #fff;
+        opacity: 0.75;
+        background-color: #0976B4;
+    }
+    
+
+    .footer-basic .social>a:hover {
+        opacity: 0.9;
+    }
+
+    .footer-basic .copyright {
+        margin-top: 15px;
+        text-align: center;
+        font-size: 13px;
+        color: #aaa;
+        margin-bottom: 0;
+    }
+
+  
+</style>
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Project Golang - Prima Ak</title>
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
 </head>
 
 <body>
+    <div class="header">
+        <a href="#" class="logo">ProjectGo</a>
+        <div class="header-right">
+          <a class="active" href="#home">Home</a>
+          <a href="#about">About</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </div>
 
-    <div class="modal fade" id="modalTask" tabindex="-1" role="dialog" aria-labelledby="modalTaskLabel" aria-hidden="true">
-        
-    </div>
+    <section>
+        <div class="modal fade" id="modalTask" tabindex="-1" role="dialog" aria-labelledby="modalTaskLabel"
+            aria-hidden="true">
 
-    <div class="container mt-5">
+        </div>
 
-        <button type="button" class="btn btn-primary add-task">Add Data</button>
+        <div class="container mt-5">
 
-        <table class="table mt-3">
-            <thead>
-                <th>#</th>
-                <th>Assignee</th>
-                <th>Deadline</th>
-                <th>Status</th>
-                <th>Action</th>
-            </thead>
-            <tbody>
-                {{ .data }}
-            </tbody>
-        </table>
+            <button type="button" class="btn btn-success add-task" style="margin-bottom:30px"><i class="fa fa-plus"></i>&nbsp;Add Data</button>
+
+            <table class="table table-hover">
+                <thead class="table-primary">
+                    <th>No</th>
+                    <th>Assignee</th>
+                    <th>Deadline</th>
+                    <th>Status</th>
+                    <th width="25%">Action</th>
+                </thead>
+                <tbody>
+                    {{ .data }}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <div class="footer-basic">
+        <footer>
+            <div class="social">
+                <a href="#"><i class="fa fa-instagram"></i></a>
+                <a href="#"><i class="fa fa-linkedin"></i></a>
+                <a href="#"><i class="fa fa-twitter"></i></a>
+                <a href="#"><i class="fa fa-facebook"></i></a>
+            </div>
+            <ul class="list-inline">
+                <li class="list-inline-item"><a href="#">Home</a></li>
+                <li class="list-inline-item"><a href="#">Services</a></li>
+                <li class="list-inline-item"><a href="#">About</a></li>
+                <li class="list-inline-item"><a href="#">Terms</a></li>
+                <li class="list-inline-item"><a href="#">Privacy Policy</a></li>
+            </ul>
+            <p class="copyright">Create by Prima Ak © 2022</p>
+        </footer>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -45,73 +247,73 @@
         crossorigin="anonymous"></script>
 
 
-        <script>
+    <script>
 
-            var site_url = "http://localhost:8000/";
-            
-            // show modal 
-            $(document).ready(function(){
-                $('.add-task').click(function(){
-                    $.get(site_url + "task/get_form", function(html){
-                        $('#modalTask').html(html).modal('show')
-                    });     
+        var site_url = "http://localhost:8000/";
+
+        // show modal 
+        $(document).ready(function () {
+            $('.add-task').click(function () {
+                $.get(site_url + "task/get_form", function (html) {
+                    $('#modalTask').html(html).modal('show')
                 });
             });
+        });
 
-            // edit data task
-            $(document).on('click', '.edit-task', function(){
-                var id = $(this).attr('data-id');
-                $.get(site_url + "task/get_form?id=" + id, function(html){
-                    $('#modalTask').html(html).modal('show')
-                });     
+        // edit data task
+        $(document).on('click', '.edit-task', function () {
+            var id = $(this).attr('data-id');
+            $.get(site_url + "task/get_form?id=" + id, function (html) {
+                $('#modalTask').html(html).modal('show')
             });
+        });
 
 
-            // simpan data 
-            $(document).on('submit', '#form-task', function(e){
-                e.preventDefault();
-                $.ajax({
-                    type: $(this).attr('method'),
-                    url: $(this).attr('action'),
-                    data: $(this).serialize(),
-                    dataType: "json",
-                    success: function(response){
-                        console.log(response)
-                        $('tbody').html(response.data)
-                        alert(response.message)
-                        $('#modalTask').modal('hide')
-                    },
-                    error: function(response){
-                        console.log(response)
-                    }
-                })
-            });
-
-            // delete data task
-            $(document).on('click', '.delete-task', function(){
-                var id = $(this).attr('data-id');
-                var confirmDelete = confirm("Are you sure you want to delete ?");
-                if (confirmDelete == true) {
-                    $.post(site_url + "task/delete", {id: id}, function(response){
-                        alert(response.message)
-                        $('tbody').html(response.data);
-                    }, 'JSON');
+        // simpan data 
+        $(document).on('submit', '#form-task', function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: $(this).attr('method'),
+                url: $(this).attr('action'),
+                data: $(this).serialize(),
+                dataType: "json",
+                success: function (response) {
+                    console.log(response)
+                    $('tbody').html(response.data)
+                    alert(response.message)
+                    $('#modalTask').modal('hide')
+                },
+                error: function (response) {
+                    console.log(response)
                 }
-            });
+            })
+        });
 
-             // Complete data task
-            $(document).on('click', '.complete-task', function(){
-                var id = $(this).attr('data-id');
-                var confirmDelete = confirm("Are you sure change status to Complete ?");
-                if (confirmDelete == true) {
-                    $.post(site_url + "task/complete", {id: id}, function(response){
-                        alert(response.message)
-                        $('tbody').html(response.data);
-                    }, 'JSON');
-                }
-            });
-                
-        </script>
+        // delete data task
+        $(document).on('click', '.delete-task', function () {
+            var id = $(this).attr('data-id');
+            var confirmDelete = confirm("Are you sure you want to delete ?");
+            if (confirmDelete == true) {
+                $.post(site_url + "task/delete", { id: id }, function (response) {
+                    alert(response.message)
+                    $('tbody').html(response.data);
+                }, 'JSON');
+            }
+        });
+
+        // Complete data task
+        $(document).on('click', '.complete-task', function () {
+            var id = $(this).attr('data-id');
+            var confirmDelete = confirm("Are you sure change status to Complete ?");
+            if (confirmDelete == true) {
+                $.post(site_url + "task/complete", { id: id }, function (response) {
+                    alert(response.message)
+                    $('tbody').html(response.data);
+                }, 'JSON');
+            }
+        });
+
+    </script>
 
 </body>
 
