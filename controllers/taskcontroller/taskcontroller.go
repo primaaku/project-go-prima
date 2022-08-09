@@ -87,6 +87,7 @@ func Store(w http.ResponseWriter, r *http.Request) {
 		r.ParseForm()
 		var task entites.Task
 
+		task.Nametask = r.Form.Get("nametask")
 		task.Assignee = r.Form.Get("assignee")
 		task.Deadline = r.Form.Get("deadline")
 

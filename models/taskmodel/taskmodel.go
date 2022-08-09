@@ -31,6 +31,7 @@ func (m *TaskModel) FindAll(task *[]entites.Task) error {
 		var data entites.Task
 		rows.Scan(
 			&data.Id_task,
+			&data.Nametask,
 			&data.Assignee,
 			&data.Deadline,
 			&data.Status)
@@ -41,8 +42,8 @@ func (m *TaskModel) FindAll(task *[]entites.Task) error {
 }
 
 func (m *TaskModel) Create(task *entites.Task) error {
-	result, err := m.db.Exec("insert into task (assignee, deadline) values(?,?)",
-		task.Assignee, task.Deadline)
+	result, err := m.db.Exec("insert into task (nametask,assignee, deadline) values(?,?,?)",
+		task.Nametask, task.Assignee, task.Deadline)
 
 	if err != nil {
 		return err
@@ -56,6 +57,7 @@ func (m *TaskModel) Create(task *entites.Task) error {
 func (m *TaskModel) Find(id int64, task *entites.Task) error {
 	return m.db.QueryRow("select * from task where id_task = ?", id).Scan(
 		&task.Id_task,
+		&task.Nametask,
 		&task.Assignee,
 		&task.Deadline,
 		&task.Status)
@@ -63,8 +65,8 @@ func (m *TaskModel) Find(id int64, task *entites.Task) error {
 
 func (m *TaskModel) Update(task entites.Task) error {
 
-	_, err := m.db.Exec("update task set assignee = ?, deadline = ? where id_task = ?",
-		task.Assignee, task.Deadline, task.Id_task)
+	_, err := m.db.Exec("update task set nametask = ?, assignee = ?, deadline = ? where id_task = ?",
+		task.Nametask, task.Assignee, task.Deadline, task.Id_task)
 
 	if err != nil {
 		return err
@@ -74,7 +76,7 @@ func (m *TaskModel) Update(task entites.Task) error {
 }
 
 func (m *TaskModel) Complete(id int64) error {
-	_, err := m.db.Exec("update task set status = 'Complete' where id_task = ?", id)
+	_, err := m.db.Exec("update task set status = 1 where id_task = ?", id)
 	if err != nil {
 		return err
 	}
