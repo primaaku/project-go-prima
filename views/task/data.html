@@ -5,16 +5,13 @@
         <td>{{ $nomor }}</td>
         <td>{{ .Assignee }}</td>
         <td>{{ .Deadline }}</td>
-        {{if .Status }}
-            <td>Complete</td>
-        {{else}}
-            <td>Not Complete</td>
-        {{end}}
+        <td>{{ .Status }}</td>
+        
 
         <td>
-            <button data-id="{{ .Id_task }}" class="btn btn-secondary btn-sm complete-task">Complete</button>
-            <button data-id="{{ .Id_task }}" class="btn btn-warning btn-sm edit-task">Edit</button>
-            <button data-id="{{ .Id_task }}" class="btn btn-danger btn-sm delete-task">Delete</button>
+            <button data-id="{{ .Id_task }}" class="btn btn-secondary btn-sm complete-task" style="width:30%">Complete</button>
+            <button data-id="{{ .Id_task }}" class="btn btn-warning btn-sm edit-task" style="width:30%">Edit</button>
+            <button data-id="{{ .Id_task }}" class="btn btn-danger btn-sm delete-task" style="width:30%">Delete</button>
         </td>
     </tr>
 {{ end }}
