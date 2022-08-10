@@ -2,7 +2,6 @@ package main
 
 import (
 	"net/http"
-	"os"
 
 	"github.com/primaaku/project-go-prima/controllers/taskcontroller"
 )
@@ -15,13 +14,13 @@ func main() {
 	http.HandleFunc("/task/delete", taskcontroller.Delete)
 	http.HandleFunc("/task/complete", taskcontroller.Complete)
 
-	// http.ListenAndServe(":8000", nil)
+	http.ListenAndServe(":8000", nil)
 
-	appPort := ":" + os.Getenv("PORT")
+	// appPort := ":" + os.Getenv("PORT")
 	// fmt.Println(appPort) // This prints ":8000"
 	// s := &http.Server{
 	// 	Addr: ":8000",
 	// }
-	http.ListenAndServe(appPort, nil)
+	// http.ListenAndServe(appPort, nil)
 
 }
